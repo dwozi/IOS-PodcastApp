@@ -97,13 +97,10 @@ extension SearchCell {
     private func configure(){
        
         guard let result = self.result else {return}
-        trackName.text = result.trackName
-        artistName.text = result.artistName
-        trackCount.text = "\(result.trackCount ?? 0)"
-        photoImageView.kf.setImage(with: URL(string: result.imageUrl!))
-        
-           
-       
-        
+        let viewModel = SearchViewModel(podcast: result)
+        trackName.text = viewModel.trackName
+        artistName.text = viewModel.artistName
+        trackCount.text = viewModel.trackCountString
+        photoImageView.kf.setImage(with: viewModel.photoImageUrl)
     }
 }
