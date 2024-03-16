@@ -29,6 +29,7 @@
 		568D16CD2BA5CFBD00397A71 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16CC2BA5CFBD00397A71 /* Extension.swift */; };
 		568D16CF2BA5D78800397A71 /* EpisodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16CE2BA5D78800397A71 /* EpisodeModel.swift */; };
 		568D16D12BA5DA7800397A71 /* EpisodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16D02BA5DA7800397A71 /* EpisodeViewModel.swift */; };
+		568D16D32BA5E90300397A71 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16D22BA5E90300397A71 /* PlayerViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		568D16CC2BA5CFBD00397A71 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		568D16CE2BA5D78800397A71 /* EpisodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeModel.swift; sourceTree = "<group>"; };
 		568D16D02BA5DA7800397A71 /* EpisodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeViewModel.swift; sourceTree = "<group>"; };
+		568D16D22BA5E90300397A71 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 				568D16A82BA4F28B00397A71 /* FavoriteViewController.swift */,
 				568D16AC2BA4F2A000397A71 /* DownloadsViewController.swift */,
 				568D16C22BA5C0D900397A71 /* EpisodeViewController.swift */,
+				568D16D22BA5E90300397A71 /* PlayerViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 				568D168F2BA4DE6700397A71 /* SceneDelegate.swift in Sources */,
 				568D16CA2BA5CCC100397A71 /* EpisodeService.swift in Sources */,
 				568D16CF2BA5D78800397A71 /* EpisodeModel.swift in Sources */,
+				568D16D32BA5E90300397A71 /* PlayerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
