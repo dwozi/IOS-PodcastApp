@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVKit
 
 class PlayerViewController: UIViewController{
     //MARK: - Properties
@@ -18,6 +19,7 @@ class PlayerViewController: UIViewController{
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "chevron.compact.down"), for: .normal)
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        button.addTarget(self, action: #selector(handleCloseButton), for: .touchUpInside)
         return button
     }()
     
@@ -72,6 +74,7 @@ class PlayerViewController: UIViewController{
         let button = UIButton(type: .system)
         button.tintColor = .secondaryLabel
         button.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        button.addTarget(self, action: #selector(handleGoPlayButton), for: .touchUpInside)
         return button
     }()
     private lazy var goBackWard: UIButton = {
@@ -106,6 +109,11 @@ class PlayerViewController: UIViewController{
 
         return image
     }()
+    private let player : AVPlayer = {
+       let player = AVPlayer()
+        
+        return player
+    }()
  
     //MARK: - Lifecycle
     init(episode:EpisodeModel) {
@@ -113,21 +121,51 @@ class PlayerViewController: UIViewController{
         super.init(nibName: nil, bundle: nil)
         style()
         layout()
+        startPlay()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
+//MARK: - Selectors
+
+extension PlayerViewController{
+    @objc func handleGoPlayButton(_ sender: UIButton){
+        if player.timeControlStatus == .paused{
+            player.play()
+            self.goPlayButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+        }else{
+            player.pause()
+            self.goPlayButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+
+        }
+    }
+    @objc func handleCloseButton(_ sender: UIButton){
+        self.dismiss(animated: true)
+    }
+}
 
 //MARK: - Helper
 extension PlayerViewController{
+    
+    private func startPlay(){
+        guard let url = URL(string: episode.streamUrl) else { return}
+        let playerItem = AVPlayerItem(url: url)
+        player.replaceCurrentItem(with: playerItem)
+        player.play()
+        self.goPlayButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+    }
+    
     private func style(){
         
         view.backgroundColor = .systemBackground
         
         timerStackView = UIStackView(arrangedSubviews: [startLabel,endLabel])
         timerStackView.axis = .horizontal
+        
+        let fullTimerStackView = UIStackView(arrangedSubviews: [sliderView,timerStackView])
+        fullTimerStackView.axis = .vertical
         
         playStackView = UIStackView(arrangedSubviews: [goBackWard,goPlayButton,goForWard])
         playStackView.axis = .horizontal
@@ -137,8 +175,9 @@ extension PlayerViewController{
         movingStackView = UIStackView(arrangedSubviews: [minusImageView,movingSlider,plusImageView])
         movingStackView.axis = .horizontal
         
-        mainStackView = UIStackView(arrangedSubviews: [closeButton,episodeImage,sliderView,timerStackView,podcastLabel,userLabel,playStackView,movingStackView])
+        mainStackView = UIStackView(arrangedSubviews: [closeButton,episodeImage,fullTimerStackView,podcastLabel,userLabel,playStackView,movingStackView])
         mainStackView.axis = .vertical
+        mainStackView.distribution = .equalSpacing
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
     
     }

@@ -16,7 +16,7 @@
 		568D16AB2BA4F29300397A71 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16AA2BA4F29300397A71 /* SearchViewController.swift */; };
 		568D16AD2BA4F2A000397A71 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16AC2BA4F2A000397A71 /* DownloadsViewController.swift */; };
 		568D16B02BA591BE00397A71 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 568D16AF2BA591BE00397A71 /* Alamofire */; };
-		568D16B22BA591BE00397A71 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 568D16B12BA591BE00397A71 /* AlamofireDynamic */; };
+		568D16B22BA591BE00397A71 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 568D16B12BA591BE00397A71 /* AlamofireDynamic */; settings = {ATTRIBUTES = (Required, ); }; };
 		568D16B52BA59A1600397A71 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16B42BA59A1600397A71 /* SearchCell.swift */; };
 		568D16B82BA5A31500397A71 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16B72BA5A31500397A71 /* SearchModel.swift */; };
 		568D16BB2BA5A42500397A71 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16BA2BA5A42500397A71 /* SearchService.swift */; };
