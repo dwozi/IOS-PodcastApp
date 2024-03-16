@@ -7,11 +7,18 @@
 
 import UIKit
 import Alamofire
+import Kingfisher
 
 private let reuseIdentifier = "searchCell"
 
 class SearchViewController : UITableViewController{
 //MARK: - Properties
+    
+    var searchResult : [Podcast] = []{
+        didSet{
+            tableView.reloadData()
+        }
+    }
 //MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -43,12 +50,12 @@ extension SearchViewController{
 
 extension SearchViewController{
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return searchResult.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! SearchCell
-        
+        cell.result = self.searchResult[indexPath.row]
         return  cell
     }
     
@@ -57,6 +64,8 @@ extension SearchViewController{
 //MARK: - SearchbarVC
 extension SearchViewController : UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        SearchService.fetchData(searchText: searchText)
+        SearchService.fetchData(searchText: searchText) { podcasts in
+            self.searchResult = podcasts
+        }
     }
 }

@@ -21,4 +21,13 @@ struct Podcast : Decodable{
     var trackCount : Int?
     var imageUrl : String?
     var feedUrl : String?
+    
+    private enum CodingKeys : String ,CodingKey{
+        case imageUrl = "artworkUrl600"
+        case trackName = "trackName"
+        case artistName = "artistName"
+        case trackCount = "trackCount"
+        case feedUrl = "feedUrl"
+       
+    }
 }

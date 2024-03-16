@@ -20,6 +20,7 @@
 		568D16B52BA59A1600397A71 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16B42BA59A1600397A71 /* SearchCell.swift */; };
 		568D16B82BA5A31500397A71 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16B72BA5A31500397A71 /* SearchModel.swift */; };
 		568D16BB2BA5A42500397A71 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16BA2BA5A42500397A71 /* SearchService.swift */; };
+		568D16BE2BA5ACB800397A71 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 568D16BD2BA5ACB800397A71 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				568D16BE2BA5ACB800397A71 /* Kingfisher in Frameworks */,
 				568D16B02BA591BE00397A71 /* Alamofire in Frameworks */,
 				568D16B22BA591BE00397A71 /* AlamofireDynamic in Frameworks */,
 			);
@@ -95,8 +97,8 @@
 			isa = PBXGroup;
 			children = (
 				568D16A42BA4EF3700397A71 /* MainTabBarController.swift */,
-				568D16A82BA4F28B00397A71 /* FavoriteViewController.swift */,
 				568D16AA2BA4F29300397A71 /* SearchViewController.swift */,
+				568D16A82BA4F28B00397A71 /* FavoriteViewController.swift */,
 				568D16AC2BA4F2A000397A71 /* DownloadsViewController.swift */,
 			);
 			path = ViewController;
@@ -145,6 +147,7 @@
 			packageProductDependencies = (
 				568D16AF2BA591BE00397A71 /* Alamofire */,
 				568D16B12BA591BE00397A71 /* AlamofireDynamic */,
+				568D16BD2BA5ACB800397A71 /* Kingfisher */,
 			);
 			productName = PodcastSwift;
 			productReference = 568D16892BA4DE6700397A71 /* PodcastSwift.app */;
@@ -176,6 +179,7 @@
 			mainGroup = 568D16802BA4DE6700397A71;
 			packageReferences = (
 				568D16AE2BA591BE00397A71 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				568D16BC2BA5ACB800397A71 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 568D168A2BA4DE6700397A71 /* Products */;
 			projectDirPath = "";
@@ -434,6 +438,14 @@
 				minimumVersion = 5.9.0;
 			};
 		};
+		568D16BC2BA5ACB800397A71 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -446,6 +458,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 568D16AE2BA591BE00397A71 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = AlamofireDynamic;
+		};
+		568D16BD2BA5ACB800397A71 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 568D16BC2BA5ACB800397A71 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

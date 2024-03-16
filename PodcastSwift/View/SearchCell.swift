@@ -6,9 +6,17 @@
 //
 
 import UIKit
+import Kingfisher
 
 class SearchCell : UITableViewCell{
     //MARK: - Properties
+    var result : Podcast?{
+        didSet{
+            configure()
+        }
+    }
+    
+    
     private let photoImageView : UIImageView = {
        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -84,5 +92,18 @@ extension SearchCell {
             stackView.leadingAnchor.constraint(equalTo: photoImageView.trailingAnchor,constant: 10),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
+    }
+    
+    private func configure(){
+       
+        guard let result = self.result else {return}
+        trackName.text = result.trackName
+        artistName.text = result.artistName
+        trackCount.text = "\(result.trackCount ?? 0)"
+        photoImageView.kf.setImage(with: URL(string: result.imageUrl!))
+        
+           
+       
+        
     }
 }
