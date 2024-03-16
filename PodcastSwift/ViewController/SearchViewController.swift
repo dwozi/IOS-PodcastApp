@@ -23,7 +23,7 @@ class SearchViewController : UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        SearchService.fetchData(searchText: "yazılım") { result in
+        SearchService.fetchData(searchText: "trt") { result in
             self.searchResult = result
         }
         style()
