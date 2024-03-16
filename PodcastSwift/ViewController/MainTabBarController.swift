@@ -20,10 +20,9 @@ class MainTabBarController : UITabBarController{
 extension MainTabBarController{
     private func setup(){
         viewControllers = [
-            createViewController(rootViewController: FavoriteViewController(), title: "Favourites", imagename: "star.fill"),
             
             createViewController(rootViewController: SearchViewController(), title: "Search", imagename: "magnifyingglass"),
-            
+            createViewController(rootViewController: FavoriteViewController(), title: "Favourites", imagename: "star.fill"),
             createViewController(rootViewController: DownloadsViewController(), title: "Downloads", imagename: "square.and.arrow.down")
             
             
