@@ -10,7 +10,11 @@ private let reuseIdentifier = "EpisodeCell"
 class EpisodeViewController : UITableViewController{
     //MARK: - Properties
     private var podcast : Podcast
-  
+    private var episodeResult : [EpisodeModel] = []{
+        didSet{
+            self.tableView.reloadData()
+        }
+    }
     //MARK: - Lifecycle
     init(podcast: Podcast) {
         self.podcast = podcast
@@ -25,10 +29,15 @@ class EpisodeViewController : UITableViewController{
         fetchData()
     }
 }
+
 //MARK: - Service
 extension EpisodeViewController{
     fileprivate func fetchData(){
-        EpisodeService.fetchData(urlString: self.podcast.feedUrl!)
+        EpisodeService.fetchData(urlString: self.podcast.feedUrl!) { result in
+            DispatchQueue.main.async{
+                self.episodeResult = result
+            }
+        }
     }
 }
 
@@ -44,11 +53,11 @@ extension EpisodeViewController{
 //MARK: - UItableViewDataSource
 extension EpisodeViewController{
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return episodeResult.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! EpisodeCell
-        
+        cell.result = self.episodeResult[indexPath.row]
         return cell
     }
 }
@@ -56,6 +65,6 @@ extension EpisodeViewController{
 //MARK: - UItableViewDelegate
 extension EpisodeViewController{
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 130
+        return 120
     }
 }

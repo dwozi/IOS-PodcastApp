@@ -8,7 +8,9 @@
 import Foundation
 import FeedKit
 struct EpisodeService{
-    static func fetchData(urlString:String){
+    static func fetchData(urlString:String,completion: @escaping([EpisodeModel]) -> Void){
+        var episodeResult : [EpisodeModel] = []
+        
         let feedkit = FeedParser(URL: URL(string: urlString)!)
         feedkit.parseAsync { result in
             switch result {
@@ -23,7 +25,9 @@ struct EpisodeService{
                     break
                 case .rss(let feedResult):
                     feedResult.items?.forEach({ value in
-                        print(value.title)
+                        let episodeCell = EpisodeModel(value: value)
+                        episodeResult.append(episodeCell)
+                        completion(episodeResult)
                     })
                 case .json(_):
                     break

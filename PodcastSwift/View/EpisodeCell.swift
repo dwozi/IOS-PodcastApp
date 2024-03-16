@@ -8,6 +8,13 @@
 import UIKit
 
 class EpisodeCell : UITableViewCell{
+    
+    var result : EpisodeModel?{
+        didSet{
+            configure()
+        }
+    }
+    
     //MARK: - Properties
     private let episodeImageView : UIImageView = {
        let image = UIImageView()
@@ -25,7 +32,7 @@ class EpisodeCell : UITableViewCell{
     }()
     private let titleLabel : UILabel = {
        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         label.numberOfLines = 2
         label.text = "Title Label"
         return label
@@ -62,7 +69,6 @@ extension EpisodeCell{
         //StackView
         stackView = UIStackView(arrangedSubviews: [pubDateLabel,titleLabel,descriptionLabel])
         stackView.axis = .vertical
-        stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(stackView)
@@ -85,5 +91,12 @@ extension EpisodeCell{
         
         
         ])
+    }
+    
+    private func configure(){
+        guard let result = self.result else {return}
+        self.titleLabel.text = result.title
+        self.descriptionLabel.text = result.description
+        
     }
 }
