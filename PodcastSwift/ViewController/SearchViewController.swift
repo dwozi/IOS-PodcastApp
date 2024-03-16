@@ -25,8 +25,8 @@ class SearchViewController : UITableViewController{
 extension SearchViewController{
     private func style(){
     
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
-        
+        tableView.register(SearchCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.rowHeight = 100
         //MARK: - Searchbar
         let searchController = UISearchController(searchResultsController: nil)
         self.navigationItem.searchController = searchController
@@ -47,8 +47,7 @@ extension SearchViewController{
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-        cell.backgroundColor = .systemRed
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! SearchCell
         
         return  cell
     }
