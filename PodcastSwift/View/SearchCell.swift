@@ -37,10 +37,11 @@ class SearchCell : UITableViewCell{
         label.font = UIFont.boldSystemFont(ofSize: 15)
         return label
     }()
-    
     private var stackView : UIStackView!
+    
+    
+    
     //MARK: - Lifecycle
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
@@ -51,8 +52,10 @@ class SearchCell : UITableViewCell{
     }
 }
 
-//MARK: -Helpers
 
+
+
+//MARK: -Helpers
 extension SearchCell {
     private func setup(){
 
@@ -64,9 +67,12 @@ extension SearchCell {
     }
     
     private func layout(){
+        //MARK: - Subviews
         addSubview(photoImageView)
         addSubview(stackView)
         
+        
+        //MARK: - add Constraints
         NSLayoutConstraint.activate([
             photoImageView.heightAnchor.constraint(equalToConstant: 80),
             photoImageView.widthAnchor.constraint(equalToConstant: 80),
@@ -74,15 +80,9 @@ extension SearchCell {
             photoImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             photoImageView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 4),
            
-            
-            
-            
             stackView.centerYAnchor.constraint(equalTo:  photoImageView.centerYAnchor),
             stackView.leadingAnchor.constraint(equalTo: photoImageView.trailingAnchor,constant: 10),
             stackView.trailingAnchor.constraint(equalTo: trailingAnchor)
-            
-            
-        
         ])
     }
 }

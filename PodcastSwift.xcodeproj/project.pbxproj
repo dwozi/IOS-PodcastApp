@@ -18,6 +18,8 @@
 		568D16B02BA591BE00397A71 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 568D16AF2BA591BE00397A71 /* Alamofire */; };
 		568D16B22BA591BE00397A71 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 568D16B12BA591BE00397A71 /* AlamofireDynamic */; };
 		568D16B52BA59A1600397A71 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16B42BA59A1600397A71 /* SearchCell.swift */; };
+		568D16B82BA5A31500397A71 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16B72BA5A31500397A71 /* SearchModel.swift */; };
+		568D16BB2BA5A42500397A71 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568D16BA2BA5A42500397A71 /* SearchService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		568D16AA2BA4F29300397A71 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		568D16AC2BA4F2A000397A71 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
 		568D16B42BA59A1600397A71 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		568D16B72BA5A31500397A71 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
+		568D16BA2BA5A42500397A71 /* SearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchService.swift; path = ../../../../SearchService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,8 @@
 		568D168B2BA4DE6700397A71 /* PodcastSwift */ = {
 			isa = PBXGroup;
 			children = (
+				568D16B92BA5A41500397A71 /* Service-API */,
+				568D16B62BA5A30200397A71 /* Model */,
 				568D169A2BA4DE6900397A71 /* Info.plist */,
 				568D16B32BA599FD00397A71 /* View */,
 				568D16A72BA4F26600397A71 /* ViewController */,
@@ -102,6 +108,22 @@
 				568D16B42BA59A1600397A71 /* SearchCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		568D16B62BA5A30200397A71 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				568D16B72BA5A31500397A71 /* SearchModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		568D16B92BA5A41500397A71 /* Service-API */ = {
+			isa = PBXGroup;
+			children = (
+				568D16BA2BA5A42500397A71 /* SearchService.swift */,
+			);
+			path = "Service-API";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,9 +203,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				568D16BB2BA5A42500397A71 /* SearchService.swift in Sources */,
 				568D16AB2BA4F29300397A71 /* SearchViewController.swift in Sources */,
 				568D168D2BA4DE6700397A71 /* AppDelegate.swift in Sources */,
 				568D16AD2BA4F2A000397A71 /* DownloadsViewController.swift in Sources */,
+				568D16B82BA5A31500397A71 /* SearchModel.swift in Sources */,
 				568D16B52BA59A1600397A71 /* SearchCell.swift in Sources */,
 				568D16A52BA4EF3700397A71 /* MainTabBarController.swift in Sources */,
 				568D16A92BA4F28B00397A71 /* FavoriteViewController.swift in Sources */,
