@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class EpisodeCell : UITableViewCell{
     
@@ -20,6 +21,7 @@ class EpisodeCell : UITableViewCell{
        let image = UIImageView()
         image.customMode()
         image.backgroundColor = . systemPurple
+        image.layer.cornerRadius = 10
         return image
     }()
     
@@ -70,6 +72,7 @@ extension EpisodeCell{
         stackView = UIStackView(arrangedSubviews: [pubDateLabel,titleLabel,descriptionLabel])
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.spacing = 5
         
         addSubview(stackView)
         
@@ -86,7 +89,7 @@ extension EpisodeCell{
             
             stackView.centerYAnchor.constraint(equalTo: episodeImageView.centerYAnchor),
             stackView.leadingAnchor.constraint(equalTo: episodeImageView.trailingAnchor,constant: 10),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor)
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor,constant: -10)
             
         
         
@@ -95,8 +98,11 @@ extension EpisodeCell{
     
     private func configure(){
         guard let result = self.result else {return}
-        self.titleLabel.text = result.title
-        self.descriptionLabel.text = result.description
+        let episodeVM = EpisodeViewModel(episode: result)
+        self.titleLabel.text = episodeVM.title
+        self.descriptionLabel.text = episodeVM.description
+        self.episodeImageView.kf.setImage(with: episodeVM.profileImageUrl)
+        self.pubDateLabel.text = episodeVM.pubDate
         
     }
 }
