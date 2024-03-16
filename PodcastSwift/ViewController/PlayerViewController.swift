@@ -7,6 +7,7 @@
 
 import UIKit
 import AVKit
+import Alamofire
 
 class PlayerViewController: UIViewController{
     //MARK: - Properties
@@ -27,6 +28,8 @@ class PlayerViewController: UIViewController{
        let image = UIImageView()
         image.customMode()
         image.backgroundColor = .systemPurple
+        image.layer.cornerRadius = 10
+        
         return image
     }()
     
@@ -38,14 +41,14 @@ class PlayerViewController: UIViewController{
     
     private let startLabel : UILabel = {
        let label = UILabel()
-        label.text = "00:00"
+        label.text = "00 : 00"
         label.textAlignment = .left
         return label
         
     }()
     private let endLabel : UILabel = {
        let label = UILabel()
-        label.text = "00:00"
+        label.text = "00 : 00"
         label.textAlignment = .right
         return label
     }()
@@ -68,6 +71,7 @@ class PlayerViewController: UIViewController{
         let button = UIButton(type: .system)
         button.tintColor = .secondaryLabel
         button.setImage(UIImage(systemName: "goforward.15"), for: .normal)
+        button.addTarget(self, action: #selector(handleGoForWardButton), for: .touchUpInside)
         return button
     }()
     private lazy var goPlayButton: UIButton = {
@@ -82,14 +86,18 @@ class PlayerViewController: UIViewController{
         button.tintColor = .secondaryLabel
         button.configuration?.baseForegroundColor = .systemBlue
         button.setImage(UIImage(systemName: "gobackward.15"), for: .normal)
+        button.addTarget(self, action: #selector(handleBackForWardButton), for: .touchUpInside)
         
         return button
     }()
     private var movingStackView : UIStackView!
  
     
-    private let movingSlider : UISlider = {
+    private lazy var movingSlider : UISlider = {
         let slider = UISlider()
+        slider.maximumValue = 100
+        slider.minimumValue = 0
+        slider.addTarget(self, action: #selector(handleVolumeSliderView), for: .valueChanged)
         return slider
     }()
     private let plusImageView : UIImageView = {
@@ -122,6 +130,11 @@ class PlayerViewController: UIViewController{
         style()
         layout()
         startPlay()
+        configureUI()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        player.pause()
     }
     
     required init?(coder: NSCoder) {
@@ -131,7 +144,21 @@ class PlayerViewController: UIViewController{
 //MARK: - Selectors
 
 extension PlayerViewController{
-    @objc func handleGoPlayButton(_ sender: UIButton){
+    
+    @objc private func handleVolumeSliderView(_ sender: UISlider){
+        player.volume = sender.value
+    }
+    
+    
+    @objc private func handleGoForWardButton(_ sender: UIButton){
+        updateForward(value: 15)
+    }
+    
+    @objc private func handleBackForWardButton(_ sender: UIButton){
+        updateForward(value: -15)
+    }
+    
+    @objc private func handleGoPlayButton(_ sender: UIButton){
         if player.timeControlStatus == .paused{
             player.play()
             self.goPlayButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
@@ -141,13 +168,45 @@ extension PlayerViewController{
 
         }
     }
-    @objc func handleCloseButton(_ sender: UIButton){
+    @objc private func handleCloseButton(_ sender: UIButton){
         self.dismiss(animated: true)
+        player.pause()
     }
 }
 
 //MARK: - Helper
 extension PlayerViewController{
+    
+    
+    private func updateForward(value:Int64){
+        let exampleTime = CMTime(value: value, timescale: 1)
+        let seekTime = CMTimeAdd(player.currentTime(), exampleTime)
+        player.seek(to: seekTime)
+    }
+    
+    fileprivate func updateSlider(){
+        let currentTimeSecond = CMTimeGetSeconds(player.currentTime())
+        let durationTime = CMTimeGetSeconds(player.currentItem?.duration ?? CMTime(value: 1, timescale: 1))
+        let resultSecondTime = currentTimeSecond / durationTime
+        self.sliderView.value = Float(resultSecondTime)
+    }
+    
+    fileprivate func updateTimeLabel(){
+        let interval = CMTimeMake(value: 1, timescale: 2)
+        player.addPeriodicTimeObserver(forInterval: interval, queue: .main) { time in
+           
+            self.startLabel.text = time.formatString()
+            let endTimeSecond = self.player.currentItem?.duration //podcast timer work with extension
+            self.endLabel.text = endTimeSecond?.formatString()
+            self.updateSlider()
+        }
+    }
+    
+    private func configureUI(){
+        self.episodeImage.kf.setImage(with: URL(string: episode.image))
+        self.podcastLabel.text = episode.title
+        self.userLabel.text = episode.author
+    }
     
     private func startPlay(){
         guard let url = URL(string: episode.streamUrl) else { return}
@@ -155,6 +214,9 @@ extension PlayerViewController{
         player.replaceCurrentItem(with: playerItem)
         player.play()
         self.goPlayButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+        self.movingSlider.value = 40
+        updateTimeLabel()
+        
     }
     
     private func style(){

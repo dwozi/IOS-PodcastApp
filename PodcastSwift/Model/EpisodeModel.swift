@@ -14,8 +14,10 @@ struct EpisodeModel{
     let description : String
     let image : String
     let streamUrl : String
+    let author : String
     
     init(value: RSSFeedItem) {
+        self.author = value.iTunes?.iTunesAuthor?.description ?? value.author ?? ""
         self.title = value.title ?? ""
         self.pubDate = value.pubDate ?? Date()
         self.streamUrl = value.enclosure?.attributes?.url ?? ""
