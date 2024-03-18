@@ -6,15 +6,41 @@
 //
 
 import UIKit
+
 private let reuseIdentifier = "EpisodeCell"
+
+//MARK: - CoreData
+private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
 class EpisodeViewController : UITableViewController{
     //MARK: - Properties
+    private let context = appDelegate.persistentContainer.viewContext
+    
     private var podcast : Podcast
     private var episodeResult : [EpisodeModel] = []{
         didSet{
             self.tableView.reloadData()
         }
     }
+    
+    private var isFavorite = false{
+        didSet{
+            setupNavBarItem()
+        }
+    }
+    
+    private var resultCoreDataItems: [PodcastsData] = []{
+        didSet{
+            let isValue = resultCoreDataItems.contains(where: {$0.feedUrl == self.podcast.feedUrl})
+            if isValue{
+                isFavorite = true
+            }else{
+                isFavorite = false
+            }
+        }
+    }
+    
+    
     //MARK: - Lifecycle
     init(podcast: Podcast) {
         self.podcast = podcast
@@ -25,8 +51,10 @@ class EpisodeViewController : UITableViewController{
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+
         setup()
         fetchData()
+
     }
 }
 
@@ -34,6 +62,11 @@ class EpisodeViewController : UITableViewController{
 extension EpisodeViewController{
     
     @objc func handleFavoriteButton(){
+        if isFavorite{
+            deleteCoreData()
+        }else{
+            addCoreData()
+        }
         print("Favourite")
     }
 }
@@ -45,20 +78,54 @@ extension EpisodeViewController{
                 self.episodeResult = result
                 
             }
-            
         }
     }
 }
-
 //MARK: - Helpers
 extension EpisodeViewController{
+    private func addCoreData(){
+        let model = PodcastsData(context: context)
+        model.feedUrl = self.podcast.feedUrl
+        model.imageUrl = self.podcast.imageUrl
+        model.artistName = self.podcast.artistName
+        model.trackName = self.podcast.trackName
+        appDelegate.saveContext()
+        isFavorite = true
+    }
+    private func deleteCoreData(){
+        let value = resultCoreDataItems.filter( {$0.feedUrl == self.podcast.feedUrl })
+        context.delete(value.first!)
+        self.isFavorite = false
+    }
+    
+    private func fetchCoreData(){
+        let fetchRequest = PodcastsData.fetchRequest()
+        do {
+            let result = try context.fetch(fetchRequest)
+            self.resultCoreDataItems = result
+        } catch  {
+            
+        }
+    }
+    private func setupNavBarItem(){
+        if isFavorite{
+            let navRightItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill")?.withTintColor(.red,renderingMode: .alwaysOriginal), style: .done, target: self, action: #selector(handleFavoriteButton))
+            self.navigationItem.rightBarButtonItem = navRightItem
+        }else{
+            let navRightItem = UIBarButtonItem(image: UIImage(systemName: "heart")?.withTintColor(.red,renderingMode: .alwaysOriginal), style: .done, target: self, action: #selector(handleFavoriteButton))
+            self.navigationItem.rightBarButtonItem = navRightItem
+        }
+    }
+    
+    
+    
     private func setup(){
         self.navigationItem.title = podcast.trackName
         tableView.register(EpisodeCell.self, forCellReuseIdentifier: reuseIdentifier)
         view.backgroundColor = .systemBackground
+        setupNavBarItem()
+        fetchCoreData()
         
-        let navRightItem = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .done, target: self, action: #selector(handleFavoriteButton))
-        self.navigationItem.rightBarButtonItems = [navRightItem]
     }
 }
 
