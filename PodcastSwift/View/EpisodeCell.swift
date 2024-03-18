@@ -27,7 +27,7 @@ class EpisodeCell : UITableViewCell{
     
     private let pubDateLabel : UILabel = {
        let label = UILabel()
-        label.textColor = .systemPurple
+        label.textColor = .purple
         label.font = UIFont.systemFont(ofSize: 16)
         label.text = "pubDate Label"
         return label

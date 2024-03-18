@@ -27,7 +27,7 @@ class FavoriteViewController : UICollectionViewController{
 extension FavoriteViewController{
     private func setup(){
         view.backgroundColor = .systemCyan
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(FavoriteCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
     }
     
@@ -41,8 +41,8 @@ extension FavoriteViewController{
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        cell.backgroundColor = .blue
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FavoriteCell
+
         return cell
     }
     
@@ -53,7 +53,8 @@ extension FavoriteViewController{
 
 extension FavoriteViewController : UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: (view.frame.width - 30) / 2, height: (view.frame.width-30) / 2)
+        let width = (view.frame.width - 30) / 2
+        return .init(width: width, height: width+50)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10

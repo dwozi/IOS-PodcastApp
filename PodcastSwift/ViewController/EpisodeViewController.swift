@@ -30,13 +30,22 @@ class EpisodeViewController : UITableViewController{
     }
 }
 
+//MARK: - Selectors
+extension EpisodeViewController{
+    
+    @objc func handleFavoriteButton(){
+        print("Favourite")
+    }
+}
 //MARK: - Service
 extension EpisodeViewController{
     fileprivate func fetchData(){
         EpisodeService.fetchData(urlString: self.podcast.feedUrl!) { result in
             DispatchQueue.main.async{
                 self.episodeResult = result
+                
             }
+            
         }
     }
 }
@@ -47,6 +56,9 @@ extension EpisodeViewController{
         self.navigationItem.title = podcast.trackName
         tableView.register(EpisodeCell.self, forCellReuseIdentifier: reuseIdentifier)
         view.backgroundColor = .systemBackground
+        
+        let navRightItem = UIBarButtonItem(image: UIImage(systemName: "heart"), style: .done, target: self, action: #selector(handleFavoriteButton))
+        self.navigationItem.rightBarButtonItems = [navRightItem]
     }
 }
 

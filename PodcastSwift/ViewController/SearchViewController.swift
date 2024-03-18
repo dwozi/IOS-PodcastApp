@@ -23,9 +23,14 @@ class SearchViewController : UITableViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+      
+        self.navigationController?.navigationBar.tintColor = UIColor.purple
+
+        
         SearchService.fetchData(searchText: "trt") { result in
             self.searchResult = result
         }
+        
         style()
         layout()
     }
@@ -63,6 +68,7 @@ extension SearchViewController{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let podcast = self.searchResult[indexPath.row]
         let controller = EpisodeViewController(podcast: podcast)
+        
         
         self.navigationController?.pushViewController(controller, animated: true)
     }
