@@ -28,6 +28,7 @@ struct Podcast : Decodable{
         case artistName = "artistName"
         case trackCount = "trackCount"
         case feedUrl = "feedUrl"
+
        
     }
 }

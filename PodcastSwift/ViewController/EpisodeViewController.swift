@@ -10,11 +10,11 @@ import UIKit
 private let reuseIdentifier = "EpisodeCell"
 
 //MARK: - CoreData
-private let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
 
 class EpisodeViewController : UITableViewController{
     //MARK: - Properties
-    private let context = appDelegate.persistentContainer.viewContext
+  
     
     private var podcast : Podcast
     private var episodeResult : [EpisodeModel] = []{
@@ -85,27 +85,24 @@ extension EpisodeViewController{
 extension EpisodeViewController{
     private func addCoreData(){
         let model = PodcastsData(context: context)
-        model.feedUrl = self.podcast.feedUrl
-        model.imageUrl = self.podcast.imageUrl
-        model.artistName = self.podcast.artistName
-        model.trackName = self.podcast.trackName
-        appDelegate.saveContext()
+        CoreDataController.addCoreData(model: model, podcast: self.podcast)
         isFavorite = true
+        let window = UIApplication.shared.connectedScenes.first as! UIWindowScene
+        let mainTabController = window.keyWindow?.rootViewController as! MainTabBarController
+        mainTabController.viewControllers?[0].tabBarItem.badgeValue = "New"
     }
     private func deleteCoreData(){
-        let value = resultCoreDataItems.filter( {$0.feedUrl == self.podcast.feedUrl })
-        context.delete(value.first!)
+        CoreDataController.deleteCoreData(values: resultCoreDataItems, podcast: podcast)
         self.isFavorite = false
     }
     
     private func fetchCoreData(){
         let fetchRequest = PodcastsData.fetchRequest()
-        do {
-            let result = try context.fetch(fetchRequest)
-            self.resultCoreDataItems = result
-        } catch  {
-            
+        
+        CoreDataController.fetchCoreData(fetchRequest: fetchRequest) { values in
+            self.resultCoreDataItems = values
         }
+        
     }
     private func setupNavBarItem(){
         if isFavorite{

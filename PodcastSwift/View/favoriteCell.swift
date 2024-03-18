@@ -6,10 +6,16 @@
 //
 
 import UIKit
-
+import Kingfisher
 
 class FavoriteCell : UICollectionViewCell{
+   
     //MARK: - Properties
+    var podcastCoreData : PodcastsData?{
+        didSet{
+            configure()
+        }
+    }
     private let podcastImageView: UIImageView = {
         let image = UIImageView()
         image.customMode()
@@ -32,18 +38,16 @@ class FavoriteCell : UICollectionViewCell{
         return label
     }()
     private var fullStackview : UIStackView!
+  
     //MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         style()
         layout()
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-
 }
 
 
@@ -54,8 +58,6 @@ extension FavoriteCell{
         fullStackview.axis = .vertical
         fullStackview.distribution = .equalSpacing
         fullStackview.translatesAutoresizingMaskIntoConstraints = false
-        
-        
     }
     private func layout(){
         addSubview(fullStackview)
@@ -66,8 +68,16 @@ extension FavoriteCell{
             fullStackview.leadingAnchor.constraint(equalTo: leadingAnchor),
             fullStackview.trailingAnchor.constraint(equalTo: trailingAnchor),
             fullStackview.bottomAnchor.constraint(equalTo: bottomAnchor),
-        
-        
         ])
     }
+    
+    private func configure(){
+        guard let podcastCoreData = self.podcastCoreData else {return}
+        let viewModel = FavoriteViewModel(favoriteModel: podcastCoreData)
+        self.podcastImageView.kf.setImage(with: viewModel.imageUrl )
+        self.podcastNameLabel.text = viewModel.podName
+        self.podcastArtistNameLabel.text = viewModel.name
+        
+    }
+
 }
