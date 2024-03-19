@@ -83,7 +83,7 @@ extension EpisodeCell{
             episodeImageView.heightAnchor.constraint(equalToConstant: 100),
             episodeImageView.widthAnchor.constraint(equalToConstant: 100),
             
-            episodeImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            episodeImageView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 5),
             episodeImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
             
             
