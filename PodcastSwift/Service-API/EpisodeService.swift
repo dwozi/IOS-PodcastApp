@@ -37,4 +37,27 @@ struct EpisodeService{
             }
         }
     }
+    
+    
+    static func downloasdEpisodes(episode:EpisodeModel){
+        let downloadRequest = DownloadRequest.suggestedDownloadDestination()
+        AF.download(episode.streamUrl,to: downloadRequest).downloadProgress { progress in
+            let progressValue = progress.fractionCompleted
+            NotificationCenter.default.post(name: .downloadNotificationName, object: nil,userInfo: ["Title":episode.title,"Progress":progressValue])
+        }.response { response in
+        
+            var downloadEpisodeResponse = UserDefaults.downloadEpisodeRead()
+            let index = downloadEpisodeResponse.firstIndex(where: {$0.author == episode.author && $0.streamUrl == episode.streamUrl})
+            downloadEpisodeResponse[index!].fileUrl = response.fileURL?.absoluteString
+         
+            do{
+                let data =  try JSONEncoder().encode(downloadEpisodeResponse)
+                UserDefaults.standard.setValue(data, forKey: UserDefaults.downloadKey)
+            }catch{
+                
+            }
+        }
+        
+    }
 }
+    

@@ -155,8 +155,15 @@ extension EpisodeViewController{
         let downloadAction = UIContextualAction(style: .normal, title: "Download") { action, view, bool in
             print("item info: \(self.episodeResult[indexPath.row])")
             UserDefaults.downloadEpisodeWrite(episode: self.episodeResult[indexPath.row])
+            EpisodeService.downloasdEpisodes(episode: self.episodeResult[indexPath.row])
+            
+            let window = UIApplication.shared.connectedScenes.first as! UIWindowScene
+            let mainTabController = window.keyWindow?.rootViewController as! MainTabBarController
+            mainTabController.viewControllers?[2].tabBarItem.badgeValue = "New"
+          
             bool(true)
             print(UserDefaults.downloadEpisodeRead())
+            
         }
         downloadAction.backgroundColor = .systemPurple
         let configuration = UISwipeActionsConfiguration(actions: [downloadAction])

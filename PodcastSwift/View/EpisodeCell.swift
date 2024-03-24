@@ -17,6 +17,18 @@ class EpisodeCell : UITableViewCell{
     }
     
     //MARK: - Properties
+      var progressView : UIProgressView = {
+        let progress = UIProgressView(progressViewStyle: .default)
+        progress.trackTintColor = .lightGray
+        progress.tintColor = .systemPurple
+        progress.layer.maskedCorners = [.layerMinXMinYCorner,.layerMaxXMaxYCorner]
+        progress.layer.cornerRadius = 10
+        progress.setProgress(Float(0), animated: true)
+        
+        progress.isHidden = true
+        
+        return progress
+    }()
     private let episodeImageView : UIImageView = {
        let image = UIImageView()
         image.customMode()
@@ -75,6 +87,11 @@ extension EpisodeCell{
         stackView.spacing = 5
         
         addSubview(stackView)
+        addSubview(progressView)
+
+        
+        //ProgressView
+        progressView.translatesAutoresizingMaskIntoConstraints = false
         
         
         //Constraints
@@ -85,6 +102,11 @@ extension EpisodeCell{
             
             episodeImageView.leadingAnchor.constraint(equalTo: leadingAnchor,constant: 5),
             episodeImageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            progressView.heightAnchor.constraint(equalToConstant: 20),
+            progressView.leadingAnchor.constraint(equalTo: episodeImageView.leadingAnchor),
+            progressView.trailingAnchor.constraint(equalTo: episodeImageView.trailingAnchor),
+            progressView.bottomAnchor.constraint(equalTo: episodeImageView.bottomAnchor),
             
             
             stackView.centerYAnchor.constraint(equalTo: episodeImageView.centerYAnchor),

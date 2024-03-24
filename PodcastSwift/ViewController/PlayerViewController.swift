@@ -207,15 +207,27 @@ extension PlayerViewController{
         self.podcastLabel.text = episode.title
         self.userLabel.text = episode.author
     }
-    
-    private func startPlay(){
-        guard let url = URL(string: episode.streamUrl) else { return}
+    private func playPlayer(url:URL){
+        
         let playerItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playerItem)
         player.play()
         self.goPlayButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
         self.movingSlider.value = 40
         updateTimeLabel()
+    }
+    private func startPlay(){
+        if episode.fileUrl != nil {
+            guard let url = URL(string: episode.fileUrl ?? "") else{return}
+            guard var fileURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {return}
+            fileURL.append(path: url.lastPathComponent)
+            playPlayer(url: fileURL)
+            return
+        }
+        
+        guard let url = URL(string: episode.streamUrl) else { return}
+        playPlayer(url: url)
+       
         
     }
     
