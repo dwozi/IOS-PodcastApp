@@ -8,7 +8,7 @@
 import Foundation
 import FeedKit
 
-struct EpisodeModel{
+struct EpisodeModel : Codable{
     let title : String
     let pubDate : Date
     let description : String

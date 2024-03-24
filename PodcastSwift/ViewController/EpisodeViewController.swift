@@ -149,4 +149,17 @@ extension EpisodeViewController{
         let controller = PlayerViewController(episode: selectedEpisode)
         self.present(controller, animated: true)
     }
+    
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let downloadAction = UIContextualAction(style: .normal, title: "Download") { action, view, bool in
+            print("item info: \(self.episodeResult[indexPath.row])")
+            UserDefaults.downloadEpisodeWrite(episode: self.episodeResult[indexPath.row])
+            bool(true)
+            print(UserDefaults.downloadEpisodeRead())
+        }
+        downloadAction.backgroundColor = .systemPurple
+        let configuration = UISwipeActionsConfiguration(actions: [downloadAction])
+        return configuration
+    }
 }

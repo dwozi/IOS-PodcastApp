@@ -7,6 +7,7 @@
 
 import Foundation
 import FeedKit
+import Alamofire
 struct EpisodeService{
     static func fetchData(urlString:String,completion: @escaping([EpisodeModel]) -> Void){
         var episodeResult : [EpisodeModel] = []
